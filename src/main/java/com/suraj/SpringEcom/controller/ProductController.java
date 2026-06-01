@@ -34,13 +34,22 @@ public class ProductController {
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(productService.getProductByImage(id));
     }
     @PostMapping("/product")
-    public ResponseEntity<?> addProduct(@RequestPart Product product, @RequestPart MultipartFile imageFile){
-        Product savedProduct  = null;
-        try {
-            savedProduct = productService.addProduct(product,imageFile);
-            return new ResponseEntity<>(savedProduct,HttpStatus.CREATED);
-        } catch (IOException e) {
-            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<Product> addProduct(@RequestPart Product product,@RequestPart MultipartFile imageFile){
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.addProduct(product,imageFile));
     }
-}
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<?> updateProduct(@PathVariable UUID id,@RequestPart Product product,@RequestPart MultipartFile imageFile){
+        productService.getProductById(id);
+
+        Product updateProduct = productService.updateProduct(id,product,imageFile);
+
+        return ResponseEntity.ok(updateProduct);
+    }
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID id){
+        productService.deleteProduct(id);
+
+        return ResponseEntity.noContent().build();
+    }
+ }
