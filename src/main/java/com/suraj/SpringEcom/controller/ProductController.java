@@ -52,4 +52,11 @@ public class ProductController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/products/serach")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword){
+        List<Product> products = productService.searchProducts(keyword);
+
+        return ResponseEntity.ok(products);
+    }
  }

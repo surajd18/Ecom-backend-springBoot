@@ -76,4 +76,14 @@ public class ProductService {
         getProductById(id);
         productRepo.deleteById(id);
     }
+
+    public List<Product> searchProducts(String keyword) {
+        List<Product> products = productRepo.searchProducts(keyword);
+
+        if(products.isEmpty()){
+            throw new ProductNotFoundException("Product NOt Found");
+        }
+
+        return products;
+    }
 }

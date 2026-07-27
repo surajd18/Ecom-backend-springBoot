@@ -1,4 +1,4 @@
-package com.suraj.SpringEcom.dto;
+package com.suraj.SpringEcom.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
